@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+
+		<header class="banner">
+			<h1>Mercado Unico</h1>
+		</header>
+
+		<nav class="navbar navbar-light bg-light">
+			<div class="container-fluid">
+				<a href="{{ url_for('index') }}" class="btn btn-primary">Productos</a>
+				<a href="{{ url_for('busqueda') }}" class="btn btn-primary">Busqueda</a>
+				<a href="{{ url_for('remesas') }}" class="btn btn-primary">Remesas</a>
+				<div class="text-end">
+					<a href="{{url_for('login')}}" class="btn btn-outline-secondary">Eres un administrador?</a>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container" id="topdiv6">
+			{% if rows %}
+				<div class="row" id="index0">
+					{% for row in rows %}
+						<div class="card needspace" style="width: 14rem;">
+							<img src="{{ url_for('static_dir', path = 'images/'+row.filename) }}" class="card-img-top" alt="...">
+							<div class="card-body">
+								<h5 class="card-title"><span>{{row.name}}</span></h5>
+								<p class="card-text"><span>{{row.category}}</span></p>
+							</div>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item"><span>{{row.description}}</span></li>
+								<li class="list-group-item"><span>Price: {{row.price_range}}</span></li>
+								<li class="list-group-item"><span>{{row.comments}}</span></li>
+							</ul>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

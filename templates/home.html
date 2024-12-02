@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block body %}
+	<div class="container" id="topdiv4">
+		<header class="banner">
+			<h1>Administracion</h1>
+		</header>
+	</div>
+	<div class="container" id="topdiv4">
+
+		<nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+				<a href="{{ url_for('index') }}" class="btn btn-outline-info me-2">>Ver todos los Productos</a>
+				<a href="{{ url_for('home') }}" class="btn btn-outline-info me-2">Recargar</a>
+				<a href="{{ url_for('download_db') }}" class="btn btn-outline-secondary me-2">Descargar Base de Datos</a>
+				<a href="{{ url_for('logout') }}" class="btn btn-outline-info">Logout</a>
+			
+			</div>
+		</nav>
+		</nav>
+		{% if message %}
+			<div class="alert alert-success" role="alert">
+				{{ message }}
+			</div>
+		{% endif %}
+		<div class="row" id="index1">
+			<div class="col-sm-6">
+				<div class="card">
+      				<div class="card-body">
+        				<h5 class="card-title">Deseas agregar algun Productos?</h5>
+        				<p class="card-text">Agrega productos nuevos de manera facil.</p>
+        				<button class="btn btn-primary" id="add_new">Click aqui</button>
+      				</div>
+    			</div>
+  			</div>
+	  		<div class="col-sm-6">
+	    		<div class="card">
+	      			<div class="card-body">
+	        			<h5 class="card-title">Deceas Eliminar algun Producto?</h5>
+	        			<p class="card-text">Elimina productos existentes de manera facil.</p>
+	        			<button class="btn btn-primary" id="edit">Click aqui</button>
+	      			</div>
+	    		</div>
+	  		</div>
+		</div>
+		<div class="card w-75" id="topdiv2">
+			<form class="card-body" action="{{ url_for('home') }}" method="POST" enctype="multipart/form-data">
+				<h5 class="card-title">Add New Item</h5>
+				<div class="form-group">
+	    			<label for="category">Category</label>
+	    			<input type="text" class="form-control" name="category" required autofocus>
+	  			</div>
+	  			<div class="form-group">
+	    			<label for="category">Name</label>
+	    			<input type="text" class="form-control" name="pro_name" required>
+	  			</div>
+	  			<div class="form-group">
+	    			<label for="category">Description</label>
+	    			<input type="text" class="form-control" name="description">
+	  			</div>
+	  			<div class="form-group">
+					<label for="category">precio</label>
+
+					<textarea class="form-control" name="price_range" rows="3"></textarea>
+  				</div>
+	  			<div class="form-group">
+	    			<label for="category">Comments</label>
+	    			<input type="text" class="form-control" name="comments">
+	  			</div>
+	  			<div class="form-group">
+	  				<label for="exampleFormControlFile1">Product Image</label>
+	    			<input type="file" class="form-control-file" name="image" accept="image/">
+	  			</div>
+	  			<button type="submit" class="btn btn-primary">Add</button>
+			</form>
+		</div>
+		<div id="topdiv3">
+			{% if rows %}
+				<div class="row">
+					{% for row in rows %}
+						<div class="card needspace" style="width: 15rem;">
+							<img src="{{ url_for('static_dir', path = 'images/'+row.filename) }}" class="card-img-top" alt="...">
+							<div class="card-body">
+			    				<h5 class="card-title">{{row.name}}</h5>
+			    				<p class="card-text">{{row.category}}</p>
+			  				</div>
+
+			  					<li class="list-group-item">{{row.description}}</li>
+			    				<li class="list-group-item">Price Range: {{row.price_range}}</li>
+			    				<li class="list-group-item">{{row.comments}}</li>
+			  				<div class="card-body">
+								<div class="row">
+			    					<a href="{{ url_for('edit', pro_id=row.pro_id) }}" class="card-link">Borrar</a>								</div>
+			  				</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

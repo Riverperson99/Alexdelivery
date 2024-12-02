@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Remesas
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="banner">
+            <h1>Servicio de Remesas</h1>
+        </header>
+
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">Productos</a>
+                <a href="{{ url_for('busqueda') }}" class="btn btn-primary">Busqueda</a>
+                <a href="{{ url_for('remesas') }}" class="btn btn-primary">Remesas</a>
+                <div class="text-end">
+                    <a href="{{url_for('login')}}" class="btn btn-outline-secondary">Eres un administrador?</a>
+                </div>
+            </div>
+        </nav>
+
+        {% if rows %}
+            <div class="row row-cols-1 row-cols-md-5 g-4 mt-5">
+                {% for row in rows %}
+                    <div class="card needspace" style="width: 14rem;">
+                        <div class="card-body">
+                            <h5 class="card-title"><span>{{row.name}}</span></h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>{{row.description}}</span></li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

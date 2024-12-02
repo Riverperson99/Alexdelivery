@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Busqueda
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="banner">
+            <h1>Filtros de Busqueda</h1>
+        </header>
+
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">Productos</a>
+                <a href="{{ url_for('busqueda') }}" class="btn btn-primary">Busqueda</a>
+                <a href="{{ url_for('remesas') }}" class="btn btn-primary">Remesas</a>
+                <div class="text-end">
+                    <a href="{{url_for('login')}}" class="btn btn-outline-secondary">Eres un administrador?</a>
+                </div>
+            </div>
+        </nav>
+
+        <form action="{{ url_for('busqueda') }}" method="POST">
+            <div class="mb-3">
+                <label for="category" class="form-label">Selecciona una categoría:</label>
+                <select class="form-select mb-2" id="category" name="category">
+                    <option value="">Seleccione una categoría</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mt-2">Filtrar</button>
+        </form>
+        
+        {% if filtered_rows %}
+            <div class="row row-cols-1 row-cols-md-5 g-4 mt-5">
+                {% for row in filtered_rows %}
+                    <div class="card needspace" style="width: 14rem;">
+                        <img src="{{ url_for('static_dir', path = 'images/'+row.filename) }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"><span>{{row.name}}</span></h5>
+                            <p class="card-text"><span>{{row.category}}</span></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>{{row.description}}</span></li>
+                            <li class="list-group-item"><span>Price: {{row.price_range}}</span></li>
+                            <li class="list-group-item"><span>{{row.comments}}</span></li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+     </div>
+{% endblock %}
+

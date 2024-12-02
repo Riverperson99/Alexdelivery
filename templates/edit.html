@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit
+{% endblock %}
+
+{% block body %}
+	<div class="container" id="topdiv5">
+		<h5 class="card-title">Edit your Product</h5>
+		<form action="{{ url_for('edit', pro_id = result.pro_id) }}" method="POST">
+	  		<button type="submit" class="btn btn-primary">Done</button>
+		</form>
+	</div>
+{% endblock %}
